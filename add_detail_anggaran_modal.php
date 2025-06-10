@@ -63,7 +63,7 @@ if (isset($_POST['save'])) {
     if (isPDF($file_name)) {
         // Pindahkan file ke folder tujuan
         move_uploaded_file($file_tmp, "upload/bukti/" . $file_name);
-        $conn->query("INSERT INTO detail_anggaran VALUES (NULL, '$id_pengguna','$id_anggaran', '$rekanan', '$uraian', '$total', '$file_name', '$tgl_pesan', CURRENT_TIMESTAMP());");
+        $conn->query("INSERT INTO detail_anggaran VALUES (NULL, '$id_pengguna','$id_anggaran', '$rekanan', '$uraian', '$total', '$file_name', '$tgl_pesan', CURRENT_TIMESTAMP(), '','Wait');");
         echo "<script>window.location.href='detail_anggaran.php?id_anggaran=" . $id_anggaran . "';</script>";
         } else {
             echo "<script>alert('Gagal mengupload file. File harus berupa PDF.');</script>";
