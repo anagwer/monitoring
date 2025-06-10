@@ -1,0 +1,71 @@
+<?php include('session.php'); ?>
+<?php include('head.php'); ?>
+
+<body>
+    <!-- Navigation -->
+    <?php include('side_bar.php'); ?>
+
+    <main id="main" class="main">
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Data kategori</h5>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="bi bi-plus-lg"></i> Tambah</button>
+                            <?php include('add_kategori_modal.php'); ?>
+                            <hr>
+                            <!-- Table with stripped rows -->
+                             
+                            <div class="table-responsive">
+                            <table class="table datatable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">Jenis Kategori</th>
+                                        <th scope="col">Nama Kategori</th>
+                                        <th scope="col">Target</th>
+                                        <th scope="col">Waktu</th>
+                                        <th scope="col">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                        require 'dbcon.php';
+                                        $no = 1;
+                                        $bool = false;
+                                        $query = $conn->query("SELECT * FROM kategori ORDER BY id_kategori DESC");
+                                        while ($row = $query->fetch_array()) {
+                                            $id_kategori = $row['id_kategori'];
+                                    ?>
+                                    <tr>
+                                        <th scope="row"><?php echo $no++; ?></th>
+                                        <td><?php echo $row['jns_kategori']; ?></td>
+                                        <td><?php echo $row['nm_kategori']; ?></td>
+                                        <td><?php echo 'Rp. '.number_format($row['target'], 0, ",", ".");?></td>
+                                        <td><?php echo $row['waktu']; ?></td>
+                                        <td style="text-align:center">
+                                            <a rel="tooltip" title="Edit" id="<?php echo $row['id_kategori'] ?>" href="#edit_kategori<?php echo $row['id_kategori'];?>" data-toggle="modal" class="btn btn-success btn-outline"><i class="bi bi-pencil-square"></i> </a>
+                                            <a rel="tooltip" title="Delete" id="<?php echo $row['id_kategori'] ?>" href="#delete_kategori<?php echo $row['id_kategori'];?>" data-toggle="modal" class="btn btn-danger btn-outline"><i class="bi bi-trash-fill"></i> </a>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                        require 'edit_kategori_modal.php';
+                                        require 'delete_kategori_modal.php';
+                                        } 
+                                    ?>
+                                </tbody>
+                            </table>
+                            <!-- End Table with stripped rows -->
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main><!-- End #main -->
+
+    <?php include('footer.php'); ?>
+    <?php include('script.php'); ?>
+</body>
+</html>
