@@ -12,8 +12,10 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Data Sub kategori</h5>
+                            <?php if ($_SESSION['ROLE'] == 'Admin'): ?>
                             <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="bi bi-plus-lg"></i> Tambah</button>
-                            <?php include('add_sub_kategori_modal.php'); ?>
+                            <?php include('add_sub_kategori_modal.php'); 
+                            endif;?>
                             <hr>
                             <!-- Table with stripped rows -->
                              <div class="table-responsive">
@@ -24,7 +26,9 @@
                                         <th scope="col">Kategori</th>
                                         <th scope="col">Sub Kategori</th>
                                         <th scope="col">Waktu</th>
+                                        <?php if ($_SESSION['ROLE'] == 'Admin'): ?>
                                         <th scope="col">Aksi</th>
+                                        <?php endif;?>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,10 +45,12 @@
                                         <td><?php echo $row['nm_kategori']; ?></td>
                                         <td><?php echo $row['nm_sub_kategori']; ?></td>
                                         <td><?php echo $row['waktu']; ?></td>
+                                        <?php if ($_SESSION['ROLE'] == 'Admin'): ?>
                                         <td style="text-align:center">
                                             <a rel="tooltip" title="Edit" id="<?php echo $row['id_sub_kategori'] ?>" href="#edit_sub_kategori<?php echo $row['id_sub_kategori'];?>" data-toggle="modal" class="btn btn-success btn-outline"><i class="bi bi-pencil-square"></i> </a>
                                             <a rel="tooltip" title="Delete" id="<?php echo $row['id_sub_kategori'] ?>" href="#delete_sub_kategori<?php echo $row['id_sub_kategori'];?>" data-toggle="modal" class="btn btn-danger btn-outline"><i class="bi bi-trash-fill"></i> </a>
                                         </td>
+                                        <?php endif;?>
                                     </tr>
                                     <?php
                                         require 'edit_sub_kategori_modal.php';

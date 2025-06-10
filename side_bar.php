@@ -11,7 +11,7 @@
     <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
             <li class="nav-item dropdown pe-3">
-                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="profil.php">
+                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#">
                 <i class="bi bi-person-circle" class="rounded-circle" style="margin-right:10px;font-size:30px;"></i>
                     <?php echo $_SESSION['NAMA'];?>
                 </a><!-- End Profile Image Icon -->
@@ -33,17 +33,18 @@
                 <span>Beranda</span>
             </a>
         </li>
+        <?php if ($_SESSION['ROLE'] != 'Kasubag'): ?>
         <li class="nav-item">
             <a class="nav-link <?php echo $current_page == 'kategori.php' ? '' : 'collapsed'; ?>" href="kategori.php">
                 <span>Data Kategori</span>
             </a>
         </li>
-        
         <li class="nav-item">
             <a class="nav-link <?php echo $current_page == 'sub_kategori.php' ? '' : 'collapsed'; ?>" href="sub_kategori.php">
                 <span>Data Sub Kategori</span>
             </a>
         </li>
+        <?php endif;?>
         <li class="nav-item">
             <a class="nav-link <?php echo $current_page == 'anggaran.php' ? '' : 'collapsed'; ?>" href="anggaran.php">
                 <span>Data Anggaran</span>

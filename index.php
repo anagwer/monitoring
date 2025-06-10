@@ -117,6 +117,7 @@
                                         JOIN sub_kategori ON sub_kategori.id_kategori = kategori.id_kategori
                                         JOIN anggaran ON anggaran.id_sub_kategori = sub_kategori.id_sub_kategori
                                         JOIN detail_anggaran ON anggaran.id_anggaran = detail_anggaran.id_anggaran
+                                        WHERE detail_anggaran.status='Acc'
                                         GROUP BY kategori.id_kategori");
                 require 'dbcon.php';
                 $no = 1;
@@ -131,6 +132,7 @@
                         JOIN sub_kategori ON sub_kategori.id_kategori = kategori.id_kategori
                         JOIN anggaran ON anggaran.id_sub_kategori = sub_kategori.id_sub_kategori
                         JOIN detail_anggaran ON anggaran.id_anggaran = detail_anggaran.id_anggaran
+                        WHERE detail_anggaran.status='Acc'
                         GROUP BY kategori.id_kategori");
 
                 // Simpan hasil query ke dalam array
@@ -225,6 +227,7 @@
                                 JOIN anggaran ON anggaran.id_sub_kategori = sub_kategori.id_sub_kategori
                                 JOIN detail_anggaran ON anggaran.id_anggaran = detail_anggaran.id_anggaran
                                 WHERE sub_kategori.id_kategori = '$id_kategori' and
+                                detail_anggaran.status='Acc' and
                                 detail_anggaran.tgl_pesan between '$tgl1' and '$tgl2'
                                 GROUP BY sub_kategori.id_sub_kategori");
                         
@@ -243,13 +246,14 @@
                                     JOIN anggaran ON anggaran.id_sub_kategori = sub_kategori.id_sub_kategori
                                     JOIN detail_anggaran ON anggaran.id_anggaran = detail_anggaran.id_anggaran
                                     WHERE sub_kategori.id_kategori = '$id_kategori' and
+                                    detail_anggaran.status='Acc' and
                                     detail_anggaran.tgl_pesan between '$tgl1' and '$tgl2'
                                     GROUP BY sub_kategori.id_sub_kategori");
                         
                                 // Menghitung persen
                                 while ($row1 = mysqli_fetch_array($result2)) {
                                     $id_anggaran = $row1['id_anggaran'];
-                                    $query = $conn->query("SELECT SUM(detail_anggaran.total) AS ttl FROM detail_anggaran WHERE id_anggaran = '$id_anggaran'");
+                                    $query = $conn->query("SELECT SUM(detail_anggaran.total) AS ttl FROM detail_anggaran WHERE id_anggaran = '$id_anggaran' and status='Acc'");
                                     $query_row = $query->fetch_array();
                         
                                     // Pastikan query_row['ttl'] tidak kosong atau 0

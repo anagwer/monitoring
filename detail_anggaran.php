@@ -17,9 +17,10 @@
                             $id_anggaran = $_GET['id_anggaran'];
                             $query = $conn->query("SELECT COUNT(*) as jml FROM pengguna");
                             $row = $query->fetch_array();?>   
-                            
+                            <?php if ($_SESSION['ROLE'] == 'Admin'): ?>
                             <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="bi bi-plus-lg"></i> Tambah</button>
-                            <?php include('add_detail_anggaran_modal.php'); ?>
+                            <?php include('add_detail_anggaran_modal.php'); 
+                            endif;?>
                             <hr>
                             <!-- Table with stripped rows -->
                              <div class="table-responsive">
@@ -86,9 +87,13 @@
                                                 echo '-';
                                             }else{?>                                        
                                                 <a href="upload/bukti/<?php echo $row['bukti']?>" target="_BLANK" class="btn btn-warning"><i class="bi bi-eye"></i></a>
-                                            <?php }?>
-                                            <a rel="tooltip" title="Edit" id="<?php echo $row['id_detail_anggaran'] ?>" href="#edit_detail_anggaran<?php echo $row['id_detail_anggaran'];?>" data-toggle="modal" class="btn btn-success btn-outline"><i class="bi bi-pencil-square"></i> </a>
-                                            <a rel="tooltip" title="Delete" id="<?php echo $row['id_detail_anggaran'] ?>" href="#delete_detail_anggaran<?php echo $row['id_detail_anggaran'];?>" data-toggle="modal" class="btn btn-danger btn-outline"><i class="bi bi-trash-fill"></i> </a>
+                                            <?php }
+                                            
+                                            if($row['status']!='Acc'){?>
+                                                <a rel="tooltip" title="Edit" id="<?php echo $row['id_detail_anggaran'] ?>" href="#edit_detail_anggaran<?php echo $row['id_detail_anggaran'];?>" data-toggle="modal" class="btn btn-success btn-outline"><i class="bi bi-pencil-square"></i> </a>
+                                                <?php if ($_SESSION['ROLE'] == 'Admin'): ?>
+                                                <a rel="tooltip" title="Delete" id="<?php echo $row['id_detail_anggaran'] ?>" href="#delete_detail_anggaran<?php echo $row['id_detail_anggaran'];?>" data-toggle="modal" class="btn btn-danger btn-outline"><i class="bi bi-trash-fill"></i> </a>
+                                            <?php endif; } ?>
                                         </td>
                                     </tr>
                                     <?php

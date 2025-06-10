@@ -12,8 +12,11 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Data Anggaran</h5>
+                            
+                            <?php if ($_SESSION['ROLE'] == 'Admin'): ?>
                             <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="bi bi-plus-lg"></i> Tambah</button>
                             <?php include('add_anggaran_modal.php'); ?>
+                            <?php endif;?>
                             <hr>
                             <!-- Table with stripped rows -->
                              <div class="table-responsive">
@@ -24,6 +27,7 @@
                                         <th scope="col">Kategori</th>
                                         <th scope="col">Uraian</th>
                                         <th scope="col">anggaran</th>
+                                        <th scope="col">Anggaran ACC</th>
                                         <th scope="col">realisasi_keuangan</th>
                                         <th scope="col">waktu</th>
                                         <th scope="col">Aksi</th>
@@ -45,16 +49,22 @@
                                         <td><?php $query1 = $conn->query("SELECT SUM(total) as jml FROM detail_anggaran where id_anggaran='$id_anggaran'");
                                                 $row1 = $query1->fetch_array(); 
                                                 echo 'Rp. '.number_format($row1['jml'], 0, ",", ".");?></td>
+                                        <td><?php $query2 = $conn->query("SELECT SUM(total) as jml FROM detail_anggaran where id_anggaran='$id_anggaran' and status='Acc'");
+                                                $row2 = $query2->fetch_array(); 
+                                                echo 'Rp. '.number_format($row2['jml'], 0, ",", ".");?></td>
                                         <td><?php echo 'Rp. '.number_format($row['realisasi_keuangan'], 0, ",", ".");?></td>
                                         
                                         <td><?php echo $row['waktu']; ?></td>
                                         <td style="text-align:center">
                                             
                                         <a href="detail_anggaran.php?id_anggaran=<?php echo $row['id_anggaran'];?>" class="btn btn-warning btn-outline"><i class="bi bi-eye"></i> </a>
-                                            <a rel="tooltip" title="E   dit" id="<?php echo $row['id_anggaran'] ?>" href="#edit_anggaran<?php echo $row['id_anggaran'];?>" data-toggle="modal" class="btn btn-success btn-outline"><i class="bi bi-pencil-square"></i> </a>
+                                        
+                                        <?php if ($_SESSION['ROLE'] == 'Admin'): ?>
+                                            <a rel="tooltip" title="Edit" id="<?php echo $row['id_anggaran'] ?>" href="#edit_anggaran<?php echo $row['id_anggaran'];?>" data-toggle="modal" class="btn btn-success btn-outline"><i class="bi bi-pencil-square"></i> </a>
                                             <?php if($row1['jml']==0){?>
                                             <a rel="tooltip" title="Delete" id="<?php echo $row['id_anggaran'] ?>" href="#delete_anggaran<?php echo $row['id_anggaran'];?>" data-toggle="modal" class="btn btn-danger btn-outline"><i class="bi bi-trash-fill"></i> </a>    
-                                            <?php }?>
+                                            <?php }
+                                            endif;?>
                                         </td>
                                     </tr>
                                     <?php
