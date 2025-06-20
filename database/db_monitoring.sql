@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 08, 2025 at 02:44 PM
+-- Generation Time: Jun 20, 2025 at 01:33 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -59,18 +59,21 @@ CREATE TABLE `detail_anggaran` (
   `total` bigint(15) NOT NULL,
   `bukti` text NOT NULL,
   `tgl_pesan` date NOT NULL,
-  `tgl_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `tgl_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `keterangan` text NOT NULL,
+  `status` enum('Acc','Wait','Decline') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `detail_anggaran`
 --
 
-INSERT INTO `detail_anggaran` (`id_detail_anggaran`, `id_pengguna`, `id_anggaran`, `rekanan`, `uraian`, `total`, `bukti`, `tgl_pesan`, `tgl_update`) VALUES
-(1, 1, 1, 'pt. makmur jawa', '<ol>\r\n<li>Gergaji ortho</li>\r\n<li>palu ortho</li>\r\n</ol>', 2929854000, 'contoh.pdf', '2024-12-19', '2025-02-05 13:36:23'),
-(2, 1, 2, 'pt. jayawijaya', '<p>apa coba</p>', 202066812, 'Pengumuman (1).pdf', '2024-12-19', '2025-01-29 08:43:56'),
-(5, 1, 3, 'Sumber Rejo', '<p>DFSD</p>', 392000000, 'contoh.pdf', '2025-02-06', '2025-02-05 23:17:16'),
-(6, 1, 1, 'Sumber Rejo', '<p>ngeprint</p>', 2120000, 'contoh.pdf', '2025-02-08', '2025-02-08 10:38:23');
+INSERT INTO `detail_anggaran` (`id_detail_anggaran`, `id_pengguna`, `id_anggaran`, `rekanan`, `uraian`, `total`, `bukti`, `tgl_pesan`, `tgl_update`, `keterangan`, `status`) VALUES
+(1, 2, 1, 'pt. makmur jawa', '<ol>\r\n<li>Gergaji ortho</li>\r\n<li>palu ortho</li>\r\n</ol>', 2929854000, 'contoh.pdf', '2025-01-19', '2025-06-11 07:30:49', 'e', 'Acc'),
+(2, 1, 2, 'pt. jayawijaya', '<p>apa coba</p>', 202066812, 'Pengumuman (1).pdf', '2024-12-19', '2025-01-29 08:43:56', '', 'Acc'),
+(5, 1, 3, 'Sumber Rejo', '<p>DFSD</p>', 392000000, 'contoh.pdf', '2025-02-06', '2025-06-10 08:56:44', '', 'Wait'),
+(6, 1, 1, 'Sumber Rejo', '<p>ngeprint</p>', 2120000, 'contoh.pdf', '2025-02-08', '2025-02-08 10:38:23', '', 'Acc'),
+(7, 1, 1, 'PT. Besi Agung', '<p>1. Kursi Tunggu</p>', 5400000, 'contoh.pdf', '2025-05-13', '2025-06-11 08:00:25', '', 'Wait');
 
 -- --------------------------------------------------------
 
@@ -116,8 +119,8 @@ CREATE TABLE `pengguna` (
 
 INSERT INTO `pengguna` (`id_pengguna`, `nama`, `username`, `password`, `role`, `foto`) VALUES
 (1, 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Admin', 'images.jpg'),
-(2, 'pengguna', 'pengguna', '8b097b8a86f9d6a991357d40d3d58634', 'Pelanggan', 'image.jpg'),
-(4, 'anon', 'anon', '2ae66f90b7788ab8950e8f81b829c947', 'Pelanggan', 'GPEDWzyWoAEnIJK.jpg');
+(2, 'PBJ', 'pbj', 'ae3ecae4765c8a764c4231ecb0c7bb1c', 'PBJ', 'image.jpg'),
+(4, 'KASUBAG', 'kasubag', '143ad2695caf8f2368b5d9ef03d37ee8', 'Kasubag', 'GPEDWzyWoAEnIJK.jpg');
 
 -- --------------------------------------------------------
 
@@ -193,7 +196,7 @@ ALTER TABLE `anggaran`
 -- AUTO_INCREMENT for table `detail_anggaran`
 --
 ALTER TABLE `detail_anggaran`
-  MODIFY `id_detail_anggaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_detail_anggaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `kategori`
