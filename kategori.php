@@ -27,7 +27,9 @@
                                         <th scope="col">Jenis Kategori</th>
                                         <th scope="col">Nama Kategori</th>
                                         <th scope="col">Target</th>
-                                        <th scope="col">Waktu</th>
+                                        <th scope="col">Penanggung Jawab</th>
+                                        <th scope="col">Created At</th>
+                                        <th scope="col">Updated At</th>
                                         <?php if ($_SESSION['ROLE'] == 'Admin'): ?>
                                         <th scope="col">Aksi</th>
                                         <?php endif;?>
@@ -38,7 +40,10 @@
                                         require 'dbcon.php';
                                         $no = 1;
                                         $bool = false;
-                                        $query = $conn->query("SELECT * FROM kategori ORDER BY id_kategori DESC");
+                                        $query = $conn->query("SELECT kategori.*, pengguna.nama 
+                                                            FROM kategori 
+                                                            LEFT JOIN pengguna ON kategori.id_user = pengguna.id_pengguna 
+                                                            ORDER BY kategori.id_kategori DESC");
                                         while ($row = $query->fetch_array()) {
                                             $id_kategori = $row['id_kategori'];
                                     ?>
@@ -47,7 +52,9 @@
                                         <td><?php echo $row['jns_kategori']; ?></td>
                                         <td><?php echo $row['nm_kategori']; ?></td>
                                         <td><?php echo 'Rp. '.number_format($row['target'], 0, ",", ".");?></td>
-                                        <td><?php echo $row['waktu']; ?></td>
+                                        <td><?php echo $row['nama']; ?></td>
+                                        <td><?php echo $row['created_at']; ?></td>
+                                        <td><?php echo $row['updated_at']; ?></td>
                                         <?php if ($_SESSION['ROLE'] == 'Admin'): ?>
                                         <td style="text-align:center">
                                             <a rel="tooltip" title="Edit" id="<?php echo $row['id_kategori'] ?>" href="#edit_kategori<?php echo $row['id_kategori'];?>" data-toggle="modal" class="btn btn-success btn-outline"><i class="bi bi-pencil-square"></i> </a>

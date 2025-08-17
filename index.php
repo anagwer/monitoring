@@ -303,9 +303,9 @@
                                 function generatePastelColors(count) {
                                     let colors = [];
                                     for (let i = 0; i < count; i++) {
-                                        let hue = Math.floor(Math.random() * (150 - 90 + 1)) + 90; // Rentang hue untuk warna hijau (90-150)
-                                        let saturation = Math.floor(Math.random() * (60 - 40 + 1)) + 40; // Saturasi antara 40-60%
-                                        let lightness = Math.floor(Math.random() * (75 - 55 + 1)) + 55; // Kecerahan antara 55-75%
+                                        let hue = Math.floor(Math.random() * (150 - 90 + 1)) + 90; // Hijau: 90-150
+                                        let saturation = Math.floor(Math.random() * (90 - 70 + 1)) + 70; // Saturasi 70%-90%
+                                        let lightness = Math.floor(Math.random() * (60 - 40 + 1)) + 40; // Lightness 40%-60%
                                         
                                         colors.push(`hsl(${hue}, ${saturation}%, ${lightness}%)`);
                                     }

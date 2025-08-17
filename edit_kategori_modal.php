@@ -1,4 +1,3 @@
-
 <?php
 	if(!$bool){
 ?>
@@ -13,6 +12,8 @@
             <div class="modal-body">
                 <form method="post" action="">
                     <input type="hidden" name="id_kategori" value="<?php echo $row['id_kategori'] ?>">
+                    <input type="hidden" name="id_user" value="<?php echo $_SESSION['ID']; ?>">
+
                     <div class="form-group">
                         <label class="form-label">Jenis Kategori</label>
                         <select class="form-select" name="jns_kategori">
@@ -39,18 +40,28 @@
         </div>
     </div>
 </div>
-<?php 
 
+<?php 
     if (isset($_POST['update'])) {
         $id_kategori = $_POST['id_kategori'];
         $jns_kategori = $_POST['jns_kategori'];
         $nm_kategori = $_POST['nm_kategori'];
         $target = $_POST['target'];
-        $conn->query("UPDATE kategori SET jns_kategori = '$jns_kategori', nm_kategori = '$nm_kategori', target = '$target' WHERE id_kategori = '$id_kategori'") or die(mysqli_error($conn));
+        $id_user = $_POST['id_user'];
+
+        $conn->query("UPDATE kategori 
+                      SET jns_kategori = '$jns_kategori', 
+                          nm_kategori = '$nm_kategori', 
+                          target = '$target', 
+                          id_user = '$id_user', 
+                          updated_at = CURRENT_TIMESTAMP() 
+                      WHERE id_kategori = '$id_kategori'") 
+            or die(mysqli_error($conn));
+
         echo "<script>window.location='kategori.php'</script>";
     }
 ?>
-								
+
 <?php
 	}
 ?>

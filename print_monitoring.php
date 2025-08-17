@@ -74,7 +74,7 @@
 
             // Simpan data hasil query ke array
             while ($row = $query->fetch_array()) {
-                $hasil = $row['jml_total'] / $row['target'];
+                $hasil = ($row['target'] > 0) ? ($row['jml_total'] / $row['target']) * 100 : 0;
                 $data[] = [
                     'jns_kategori' => $row['jns_kategori'],
                     'nm_kategori' => $row['nm_kategori'],

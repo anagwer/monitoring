@@ -68,71 +68,71 @@ ini_set('display_errors', 1);
     </div>
 </div>
 <?php 
-    if (isset($_POST['update'])) {
-        $id_detail_anggaran = $_POST['id_detail_anggaran'];
-        $id_anggaran = $_POST['id_anggaran'];
-        $id_pengguna = $_POST['id_pengguna'];
+if (isset($_POST['update'])) {
+    $id_detail_anggaran = $_POST['id_detail_anggaran'];
+    $id_anggaran = $_POST['id_anggaran'];
+    $user_id = $_SESSION['ID']; // ID user sekarang
+    $role = $_SESSION['ROLE'];
 
-        // Hanya proses upload file jika pengguna adalah Admin
-        if ($_SESSION['ROLE'] == 'Admin') {
-                
-            $rekanan = $_POST['rekanan'];
-            $uraian = $_POST['uraian'];
-            $total = $_POST['total'];
-            $tgl_pesan = $_POST['tgl_pesan'];
-            
-            $file_name = isset($_FILES['bukti']) && !empty($_FILES['bukti']['name']) ? $_FILES['bukti']['name'] : '';
-            $file_tmp = isset($_FILES['bukti']) && !empty($_FILES['bukti']['tmp_name']) ? $_FILES['bukti']['tmp_name'] : '';
+    if ($role == 'Admin') {
+        // Admin update lengkap
+        $rekanan = $_POST['rekanan'];
+        $uraian = $_POST['uraian'];
+        $total = $_POST['total'];
+        $tgl_pesan = $_POST['tgl_pesan'];
 
-            // Fungsi untuk memeriksa file PDF
-            function isPDF($filename) {
-                return strtolower(pathinfo($filename, PATHINFO_EXTENSION)) === 'pdf';
-            }
+        $file_name = isset($_FILES['bukti']) && !empty($_FILES['bukti']['name']) ? $_FILES['bukti']['name'] : '';
+        $file_tmp = isset($_FILES['bukti']) && !empty($_FILES['bukti']['tmp_name']) ? $_FILES['bukti']['tmp_name'] : '';
 
-            if (!empty($file_name)) {
-                $upload_dir = "upload/bukti/";
+        function isPDF($filename) {
+            return strtolower(pathinfo($filename, PATHINFO_EXTENSION)) === 'pdf';
+        }
 
-                if (isPDF($file_name)) {
-                    if (file_exists($upload_dir . $file_name)) {
-                        // File sudah ada, tampilkan alert
-                        echo "<script>alert('Gagal mengupload file. File dengan nama yang sama sudah ada.');</script>";
-                    } else {
-                        // File belum ada, lanjutkan proses upload
-                        move_uploaded_file($file_tmp, $upload_dir . $file_name);
-                        $conn->query("UPDATE detail_anggaran SET 
-                            rekanan = '$rekanan',
-                            id_pengguna = '$id_pengguna',
-                            uraian = '$uraian',
-                            total = '$total',
-                            tgl_pesan = '$tgl_pesan',
-                            bukti = '$file_name' 
-                            WHERE id_detail_anggaran = '$id_detail_anggaran'") or die(mysqli_error($conn));
-                        echo "<script>alert('File berhasil diupload'); window.location.href='detail_anggaran.php?id_anggaran=$id_anggaran';</script>";
-                    }
+        if (!empty($file_name)) {
+            $upload_dir = "upload/bukti/";
+
+            if (isPDF($file_name)) {
+                if (file_exists($upload_dir . $file_name)) {
+                    echo "<script>alert('Gagal mengupload file. File dengan nama yang sama sudah ada.');</script>";
                 } else {
-                    echo "<script>alert('Gagal mengupload file. File harus berupa PDF.');</script>";
+                    move_uploaded_file($file_tmp, $upload_dir . $file_name);
+                    $conn->query("UPDATE detail_anggaran SET 
+                        rekanan = '$rekanan',
+                        id_pengguna = '$user_id',
+                        uraian = '$uraian',
+                        total = '$total',
+                        tgl_pesan = '$tgl_pesan',
+                        bukti = '$file_name'
+                        WHERE id_detail_anggaran = '$id_detail_anggaran'") or die(mysqli_error($conn));
+                    echo "<script>alert('File berhasil diupload'); window.location.href='detail_anggaran.php?id_anggaran=$id_anggaran';</script>";
                 }
             } else {
-                // Update tanpa file
-                $conn->query("UPDATE detail_anggaran SET 
-                    rekanan = '$rekanan',
-                    id_pengguna = '$id_pengguna',
-                    uraian = '$uraian',
-                    total = '$total',
-                    tgl_pesan = '$tgl_pesan' 
-                    WHERE id_detail_anggaran = '$id_detail_anggaran'") or die(mysqli_error($conn));
-                echo "<script>window.location.href='detail_anggaran.php?id_anggaran=$id_anggaran';</script>";
+                echo "<script>alert('Gagal mengupload file. File harus berupa PDF.');</script>";
             }
         } else {
-            $status = $_POST['status'];
-            $keterangan = $_POST['keterangan'];
-            // Untuk pengguna non-Admin, update tanpa file
+            // Update tanpa file
             $conn->query("UPDATE detail_anggaran SET 
-                status = '$status',
-                keterangan = '$keterangan'
+                rekanan = '$rekanan',
+                id_pengguna = '$user_id',
+                uraian = '$uraian',
+                total = '$total',
+                tgl_pesan = '$tgl_pesan'
                 WHERE id_detail_anggaran = '$id_detail_anggaran'") or die(mysqli_error($conn));
             echo "<script>window.location.href='detail_anggaran.php?id_anggaran=$id_anggaran';</script>";
         }
+
+    } else {
+        // PBJ atau Kasubag cuma update status dan keterangan, sekaligus update id_user_acc jadi user yang ACC sekarang
+        $status = $_POST['status'];
+        $keterangan = $_POST['keterangan'];
+
+        $conn->query("UPDATE detail_anggaran SET 
+            status = '$status',
+            keterangan = '$keterangan',
+            id_user_acc = '$user_id' 
+            WHERE id_detail_anggaran = '$id_detail_anggaran'") or die(mysqli_error($conn));
+        echo "<script>window.location.href='detail_anggaran.php?id_anggaran=$id_anggaran';</script>";
     }
 }
+    }
 ?>

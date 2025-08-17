@@ -7,6 +7,8 @@
             </div>
             <div class="modal-body">
                 <form method="post" enctype="multipart/form-data">    
+                    <input type="hidden" name="id_user" value="<?php echo $_SESSION['ID']; ?>">
+
                     <div class="form-group">
                         <label class="form-label">Jenis Kategori</label>
                         <select class="form-select" name="jns_kategori">
@@ -25,7 +27,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button name="save" type="submit" class="btn btn-primary">Simpan</button>
+                <button name="save" type="submit" class="btn btn-primary">Simpan</button>
                 </form>  
             </div>
         </div>
@@ -36,14 +38,14 @@
 require_once 'dbcon.php';
 
 if (isset($_POST['save'])) {
-
+    $id_user = $_POST['id_user'];
     $jns_kategori = $_POST['jns_kategori'];
     $nm_kategori = $_POST['nm_kategori'];
     $target = $_POST['target'];
-    
-    $conn->query("INSERT INTO kategori VALUES (NULL, '$jns_kategori', '$nm_kategori', '$target', CURRENT_TIMESTAMP());");
+
+    $conn->query("INSERT INTO kategori (id_kategori, jns_kategori, nm_kategori, target, id_user, created_at, updated_at) 
+                  VALUES (NULL, '$jns_kategori', '$nm_kategori', '$target', '$id_user', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP())");
+
     echo "<script>window.location.href='kategori.php';</script>";
-
-
-    }
+}
 ?>

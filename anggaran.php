@@ -18,18 +18,19 @@
                             <?php include('add_anggaran_modal.php'); ?>
                             <?php endif;?>
                             <hr>
-                            <!-- Table with stripped rows -->
-                             <div class="table-responsive">
+                            <div class="table-responsive">
                             <table class="table datatable">
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
                                         <th scope="col">Kategori</th>
                                         <th scope="col">Uraian</th>
-                                        <th scope="col">anggaran</th>
+                                        <th scope="col">Anggaran</th>
                                         <th scope="col">Anggaran ACC</th>
-                                        <th scope="col">realisasi_keuangan</th>
-                                        <th scope="col">waktu</th>
+                                        <th scope="col">Realisasi Keuangan</th>
+                                        <th scope="col">Penanggung Jawab</th>
+                                        <th scope="col">Created At</th>
+                                        <th scope="col">Updated At</th>
                                         <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
@@ -38,7 +39,11 @@
                                         require 'dbcon.php';
                                         $no = 1;
                                         $bool = false;
-                                        $query = $conn->query("SELECT anggaran.*, sub_kategori.* FROM anggaran JOIN sub_kategori ON anggaran.id_sub_kategori=sub_kategori.id_sub_kategori JOIN kategori ON sub_kategori.id_kategori=kategori.id_kategori");
+                                        $query = $conn->query("SELECT anggaran.*, sub_kategori.nm_sub_kategori, pengguna.nama 
+                                                               FROM anggaran 
+                                                               JOIN sub_kategori ON anggaran.id_sub_kategori = sub_kategori.id_sub_kategori 
+                                                               JOIN kategori ON sub_kategori.id_kategori = kategori.id_kategori 
+                                                               LEFT JOIN pengguna ON anggaran.id_user = pengguna.id_pengguna");
                                         while ($row = $query->fetch_array()) {
                                             $id_anggaran = $row['id_anggaran'];
                                     ?>
@@ -46,25 +51,32 @@
                                         <th scope="row"><?php echo $no++; ?></th>
                                         <td><?php echo $row['nm_sub_kategori']; ?></td>
                                         <td><?php echo $row['uraian']; ?></td>
-                                        <td><?php $query1 = $conn->query("SELECT SUM(total) as jml FROM detail_anggaran where id_anggaran='$id_anggaran'");
+                                        <td>
+                                            <?php 
+                                                $query1 = $conn->query("SELECT SUM(total) as jml FROM detail_anggaran WHERE id_anggaran='$id_anggaran'");
                                                 $row1 = $query1->fetch_array(); 
-                                                echo 'Rp. '.number_format($row1['jml'], 0, ",", ".");?></td>
-                                        <td><?php $query2 = $conn->query("SELECT SUM(total) as jml FROM detail_anggaran where id_anggaran='$id_anggaran' and status='Acc'");
+                                                echo 'Rp. '.number_format($row1['jml'], 0, ",", "."); 
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <?php 
+                                                $query2 = $conn->query("SELECT SUM(total) as jml FROM detail_anggaran WHERE id_anggaran='$id_anggaran' AND status='Acc'");
                                                 $row2 = $query2->fetch_array(); 
-                                                echo 'Rp. '.number_format($row2['jml'], 0, ",", ".");?></td>
+                                                echo 'Rp. '.number_format($row2['jml'], 0, ",", "."); 
+                                            ?>
+                                        </td>
                                         <td><?php echo 'Rp. '.number_format($row['realisasi_keuangan'], 0, ",", ".");?></td>
-                                        
-                                        <td><?php echo $row['waktu']; ?></td>
+                                        <td><?php echo $row['nama']; ?></td>
+                                        <td><?php echo $row['created_at']; ?></td>
+                                        <td><?php echo $row['updated_at']; ?></td>
                                         <td style="text-align:center">
-                                            
-                                        <a href="detail_anggaran.php?id_anggaran=<?php echo $row['id_anggaran'];?>" class="btn btn-warning btn-outline"><i class="bi bi-eye"></i> </a>
-                                        
-                                        <?php if ($_SESSION['ROLE'] == 'Admin'): ?>
-                                            <a rel="tooltip" title="Edit" id="<?php echo $row['id_anggaran'] ?>" href="#edit_anggaran<?php echo $row['id_anggaran'];?>" data-toggle="modal" class="btn btn-success btn-outline"><i class="bi bi-pencil-square"></i> </a>
-                                            <?php if($row1['jml']==0){?>
-                                            <a rel="tooltip" title="Delete" id="<?php echo $row['id_anggaran'] ?>" href="#delete_anggaran<?php echo $row['id_anggaran'];?>" data-toggle="modal" class="btn btn-danger btn-outline"><i class="bi bi-trash-fill"></i> </a>    
-                                            <?php }
-                                            endif;?>
+                                            <a href="detail_anggaran.php?id_anggaran=<?php echo $row['id_anggaran'];?>" class="btn btn-warning btn-outline"><i class="bi bi-eye"></i> </a>
+                                            <?php if ($_SESSION['ROLE'] == 'Admin'): ?>
+                                                <a rel="tooltip" title="Edit" id="<?php echo $row['id_anggaran'] ?>" href="#edit_anggaran<?php echo $row['id_anggaran'];?>" data-toggle="modal" class="btn btn-success btn-outline"><i class="bi bi-pencil-square"></i> </a>
+                                                <?php if ($row1['jml'] == 0): ?>
+                                                    <a rel="tooltip" title="Delete" id="<?php echo $row['id_anggaran'] ?>" href="#delete_anggaran<?php echo $row['id_anggaran'];?>" data-toggle="modal" class="btn btn-danger btn-outline"><i class="bi bi-trash-fill"></i> </a>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                     <?php
@@ -74,14 +86,13 @@
                                     ?>
                                 </tbody>
                             </table>
-                            <!-- End Table with stripped rows -->
                         </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-    </main><!-- End #main -->
+    </main>
 
     <?php include('footer.php'); ?>
     <?php include('script.php'); ?>
