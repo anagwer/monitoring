@@ -187,7 +187,7 @@
                 </div>
             </div>
             <br>
-            <button type="submit" name="monitoring" class="btn btn-primary" style="float: right;">Tampilkan</button>
+            <button type="submit" name="monitoring" class="btn btn-primary" style="float: right;">Tampilkan</button><br>
         </form>
         <?php
 

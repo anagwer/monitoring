@@ -80,13 +80,11 @@ if (isset($_POST['submit'])) {
             
             <div class="col-lg-6">
               <div class="card">
-
                 <div class="card-body">
-                <div class="col-lg-12 col-md-6 pt-4 text-center">
-                  <div class="pt-2 pb-2">
+                  <div class="text-center pt-2 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Login Sistem</h5>
                   </div>
-                </div>
+
                   <?php if (isset($errorMsg)) { ?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <?php echo $errorMsg; ?>
