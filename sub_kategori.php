@@ -11,7 +11,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Data Sub Kategori</h5>
+                            <h5 class="card-title">Data Rekening</h5>
                             <?php if ($_SESSION['ROLE'] == 'Admin'): ?>
                             <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="bi bi-plus-lg"></i> Tambah</button>
                             <?php include('add_sub_kategori_modal.php'); endif; ?>
@@ -21,8 +21,8 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
-                                        <th scope="col">Kategori</th>
-                                        <th scope="col">Sub Kategori</th>
+                                        <th scope="col">Uraian</th>
+                                        <th scope="col">Nama Rekening</th>
                                         <th scope="col">Penanggung Jawab</th>
                                         <th scope="col">Created At</th>
                                         <th scope="col">Updated At</th>

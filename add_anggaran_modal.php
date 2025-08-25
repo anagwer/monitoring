@@ -27,10 +27,10 @@
                         <label class="form-label">Uraian</label>
                         <input type="text" class="form-control" name="uraian" required>                        
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Realisasi Keuangan</label>
-                        <input type="text" class="form-control" name="realisasi_keuangan">                        
-                    </div>
+                    <!-- <div class="form-group"> -->
+                        <!-- <label class="form-label">Realisasi Keuangan</label> -->
+                        <input type="hidden" class="form-control" name="realisasi_keuangan" value="0">                        
+                    <!-- </div> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

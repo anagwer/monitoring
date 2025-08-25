@@ -48,10 +48,10 @@
             <thead>
                 <tr>
                     <th scope="col">No</th>
-                    <th scope="col">Jenis Kategori</th>
-                    <th scope="col">Nama Kategori</th>
+                    <th scope="col">Jenis Uraian</th>
+                    <th scope="col">Nama Uraian</th>
+                    <th scope="col">Pagu Anggaran</th>
                     <th scope="col">Target</th>
-                    <th scope="col">Anggaran</th>
                     <th scope="col">Persen</th>
                 </tr>
             </thead>

@@ -36,12 +36,12 @@
         <?php if ($_SESSION['ROLE'] != 'Kasubag'): ?>
         <li class="nav-item">
             <a class="nav-link <?php echo $current_page == 'kategori.php' ? '' : 'collapsed'; ?>" href="kategori.php">
-                <span>Data Kategori</span>
+                <span>Data Uraian</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link <?php echo $current_page == 'sub_kategori.php' ? '' : 'collapsed'; ?>" href="sub_kategori.php">
-                <span>Data Sub Kategori</span>
+                <span>Data Rekening</span>
             </a>
         </li>
         <?php endif;?>

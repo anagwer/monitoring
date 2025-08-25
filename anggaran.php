@@ -23,11 +23,11 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
-                                        <th scope="col">Kategori</th>
+                                        <th scope="col">Nama Rekening</th>
                                         <th scope="col">Uraian</th>
-                                        <th scope="col">Anggaran</th>
-                                        <th scope="col">Anggaran ACC</th>
-                                        <th scope="col">Realisasi Keuangan</th>
+                                        <th scope="col">Target</th>
+                                        <th scope="col">Target ACC</th>
+                                        <!-- <th scope="col">Realisasi Keuangan</th> -->
                                         <th scope="col">Penanggung Jawab</th>
                                         <th scope="col">Created At</th>
                                         <th scope="col">Updated At</th>
@@ -65,7 +65,7 @@
                                                 echo 'Rp. '.number_format($row2['jml'], 0, ",", "."); 
                                             ?>
                                         </td>
-                                        <td><?php echo 'Rp. '.number_format($row['realisasi_keuangan'], 0, ",", ".");?></td>
+                                        <!-- <td><?php echo 'Rp. '.number_format($row['realisasi_keuangan'], 0, ",", ".");?></td> -->
                                         <td><?php echo $row['nama']; ?></td>
                                         <td><?php echo $row['created_at']; ?></td>
                                         <td><?php echo $row['updated_at']; ?></td>

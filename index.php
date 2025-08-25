@@ -96,10 +96,10 @@
                 <thead>
                     <tr>
                         <th scope="col">No</th>
-                        <th scope="col">Jenis Kategori</th>
-                        <th scope="col">Nama Kategori</th>
+                        <th scope="col">Jenis Uraian</th>
+                        <th scope="col">Nama Uraian</th>
+                        <th scope="col">Pagu Anggaran</th>
                         <th scope="col">Target</th>
-                        <th scope="col">Anggaran</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -176,7 +176,7 @@
                 </table>
             </div>
             <!-- End Table with stripped rows -->
-        <h2 class="mt-3 mb-2 text-center"><b>Progress Anggaran Per Kategori</b></h2>
+        <h2 class="mt-3 mb-2 text-center"><b>Progress Target Per Uraian</b></h2>
         <form method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-6">

@@ -32,10 +32,10 @@
                         <label class="form-label">Uraian</label>
                         <input type="text" class="form-control" name="uraian" value="<?php echo $row['uraian'];?>" required>                        
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Realisasi Keuangan</label>
-                        <input type="text" class="form-control" name="realisasi_keuangan" value="<?php echo $row['realisasi_keuangan'];?>" >                        
-                    </div>
+                    <!-- <div class="form-group"> -->
+                        <!-- <label class="form-label">Realisasi Keuangan</label> -->
+                        <input type="hidden" class="form-control" name="realisasi_keuangan" value="<?php echo $row['realisasi_keuangan'];?>" >                        
+                    <!-- </div> -->
                     <br>
                     <button name="update" type="submit" class="btn btn-primary">Simpan</button>
                 </form>
